@@ -31,7 +31,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         AccountContext accountContext = (AccountContext) userDetailsService.loadUserByUsername(username);
 
-        if (passwordEncoder.matches(passwordEncoder.encode(password), accountContext.getPassword())) {
+        if (!passwordEncoder.matches(password, accountContext.getPassword())) {
             throw new BadCredentialsException("BadCredentialException");
         }
 
