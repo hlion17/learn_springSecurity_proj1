@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
@@ -15,12 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AjaxLoginProcessFilter extends AbstractAuthenticationProcessingFilter {
+public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     private ObjectMapper objectMapper = new ObjectMapper();
+    private static final String XML_HTTP_REQUEST = "XMLHttpRequest";
+    private static final String X_REQUESTED_WITH = "X-Requested-With";
 
-    public AjaxLoginProcessFilter() {
-        super(new AntPathRequestMatcher("/api/login"));
+    public AjaxLoginProcessingFilter() {
+        super(new AntPathRequestMatcher("/api/login", "POST"));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class AjaxLoginProcessFilter extends AbstractAuthenticationProcessingFilt
 
     private boolean isAjax(HttpServletRequest request) {
 
-        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-with"))) {
+        if (XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH))) {
             return true;
         }
 
