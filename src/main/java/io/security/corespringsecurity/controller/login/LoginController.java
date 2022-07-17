@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.controller.login;
 
-import io.security.corespringsecurity.domain.Account;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.security.token.AjaxAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,12 +20,9 @@ public class LoginController {
 
     @GetMapping(value = {"/login", "/api/login"})
     public String login(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "exception", required = false) String exception, Model model
-    ,HttpServletResponse response) {
-
+                        @RequestParam(value = "exception", required = false) String exception, Model model, HttpServletResponse response) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-
         return "login";
     }
 
